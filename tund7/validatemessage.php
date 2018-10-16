@@ -1,22 +1,27 @@
 <?php
   require("functions.php");
-  
-  //kui pole sisseloginud, siis sisselogimise lehele
-  if(!isset($_SESSION["userId"])) { 
-  header("Location: index_1.php");
-  exit ();
+   
+  //kui pole sisse logitud, siis logimise lehele
+  if(!isset($_SESSION["userId"])){
+	  header("Location: index_1.php");
+	  exit();
   }
   
-  //logime välja 
-  if(isset($_GET["logout"])) { 
-  session_destroy();
-  header("Location: index_1.php");
-  exit ();
+  //logime välja
+  if(isset($_GET["logout"])){
+	  session_destroy();
+	  header("Location: index_1.php");
+	  exit();
+  }
+  if(isset($_GET["id"])){
+	  $msg=readmsgforvalidation($_GET["id"]);
   }
   
-  if(isset($_GET["id"])) { 
-  $msg = readmsgforvalidation ($_GET["id"]);
+  if(isset($_POST["submitValidation"])){
+	validatemsg(intval($_POST["id"]), intval($_POST["validation"]));
   }
+  
+  //UPDATE vpamsg SET acceptedby=?, accepted=?, accepttime=now() WHERE id=? SQL
 ?>
 <!DOCTYPE html>
 <html>
@@ -24,12 +29,12 @@
   <meta charset="utf-8">
   <title>Anonüümsed sõnumid</title>
 </head>
-<body>
+<body style="font-family:comic sans ms;">
   <h1>Sõnumid</h1>
   <p>Siin on minu <a href="http://www.tlu.ee">TLÜ</a> õppetöö raames valminud veebilehed. Need ei oma mingit sügavat sisu ja nende kopeerimine ei oma mõtet.</p>
   <hr>
   <ul>
-	<li><a href="?logout=1">Logi välja</a>!</li>
+	<li><a href="?logout=1">Logi välja</a></li>
 	<li><a href="validatemsg.php">Tagasi</a> sõnumite lehele!</li>
   </ul>
   <hr>
@@ -44,4 +49,4 @@
   <hr>
 
 </body>
-</html>
+</html> 

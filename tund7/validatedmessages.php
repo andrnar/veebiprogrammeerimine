@@ -1,6 +1,8 @@
 <?php
   require("functions.php");
   //kui pole sisseloginud, siis sisselogimise lehele
+  
+  //kui pole sisselogitud
   if(!isset($_SESSION["userId"])) { 
   header("Location: index_1.php");
   exit ();
@@ -13,7 +15,7 @@
   exit ();
   }
   
-  $messages = readallunvalidatedmessages();
+  $messages = readallvalidatedmessagesbyuser();
   
 ?>
 <!DOCTYPE html>
@@ -31,7 +33,7 @@
 	<li><a href="main.php">Tagasi</a> pealehele!</li>
   </ul>
   <hr>
-  <h2>Valideerimata sõnumid</h2>
+  <h2>Valideeritud sõnumid</h2>
   <?php
   echo $messages; 
   ?> 
